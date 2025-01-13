@@ -1,17 +1,14 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-
 import './App.css'
-import MovieContext from './components/MovieContext'
 
+import MovieContextProvider from '@/utils/MovieContextProvider'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <MovieContext>
-        <Button size="icon" >Hey</Button>
-      </MovieContext>
+      <MovieContextProvider>
+        <h1>Home</h1>
+        <h1>Search</h1>
+      </MovieContextProvider>
     </>
   )
 }

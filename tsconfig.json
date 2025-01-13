@@ -1,10 +1,12 @@
 {
-	"files": [],
+	// "files": [],
 	"references": [],
 	"compilerOptions": {
+		"jsx": "react",
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@/utils/*": ["./src/utils/*"]
 		}
 	}
 }
