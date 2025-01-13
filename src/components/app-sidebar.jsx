@@ -14,6 +14,8 @@ import {
     SidebarFooter,
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { NavLink } from "react-router";
+
 
 // Menu items.
 const items = [
@@ -24,7 +26,7 @@ const items = [
     },
     {
         title: "Favorite",
-        url: "#",
+        url: "/Favorite",
         icon: Heart,
     },
     {
@@ -33,7 +35,6 @@ const items = [
         icon: Settings,
     },
 ]
-
 
 export function AppSidebar() {
     return (
@@ -59,10 +60,16 @@ export function AppSidebar() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <NavLink
+                                            to={item.url}
+
+                                        >
+                                            {({ isActive }) => {
+                                                // TODO : HighLighting Link if it's active
+                                            }}
                                             <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
+                                            {item.title}
+                                        </NavLink>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
