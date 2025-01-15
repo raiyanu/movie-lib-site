@@ -17,7 +17,7 @@ export default function Layout({ children }) {
                         <Navbar >
                             <SidebarTrigger />
                         </Navbar>
-                        <main className='px-2'>{children}</main>
+                        <main className=''>{children}</main>
                     </div>
                 </SidebarProvider>
             </ThemeProvider>
