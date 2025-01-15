@@ -31,7 +31,7 @@ const items = [
     },
     {
         title: "Settings",
-        url: "#",
+        url: "/settings",
         icon: Settings,
     },
 ]
@@ -59,18 +59,16 @@ export function AppSidebar() {
                         <SidebarMenu>
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <NavLink
-                                            to={item.url}
-
-                                        >
-                                            {({ isActive }) => {
-                                                // TODO : HighLighting Link if it's active
-                                            }}
-                                            <item.icon />
-                                            {item.title}
-                                        </NavLink>
-                                    </SidebarMenuButton>
+                                    <NavLink to={item.url}>
+                                        {({ isActive }) => (
+                                            <SidebarMenuButton asChild isActive={isActive}>
+                                                <div className="">
+                                                    <item.icon />
+                                                    {item.title}
+                                                </div>
+                                            </SidebarMenuButton>
+                                        )}
+                                    </NavLink>
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
