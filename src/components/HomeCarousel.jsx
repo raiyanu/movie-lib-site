@@ -60,7 +60,6 @@ function CarouselItemContent({ movie }) {
         async function run() {
             let data = await fetchFullMovieData(movie.ids.imdb);
             setMovieFullData(() => data);
-            console.log(movieFullData);
         }
         run();
     }, [movie.ids.imdb]);

@@ -1,4 +1,8 @@
 import { createContext } from "react";
+import {
+    loadFavoriteMovieDB,
+    addFavoriteMovieDB, removeFavoriteMovieDB, toggleFavorite
+} from './PersistentStorage';
 
 export const MovieContext = createContext(null);
 
@@ -6,11 +10,17 @@ export default function MovieContextProvider({ children }) {
     async function trendingMovieList(count) {
         return count;
     }
+
     async function getTrendingMovieCarousel() {
         return getTrendingMovieCarouselPlaceHolder;
     }
+
+    async function isFavorite(id) {
+        return loadFavoriteMovieDB().includes(id);
+    }
+
     return (
-        <MovieContext.Provider value={{ trendingMovieList, getTrendingMovieCarousel }}>
+        <MovieContext.Provider value={{ trendingMovieList, getTrendingMovieCarousel, toggleFavorite, isFavorite }}>
             {children}
         </MovieContext.Provider>
     );
