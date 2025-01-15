@@ -1,12 +1,8 @@
-
-
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 
-import Card from "./section/card";
 import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from './components/Navbar'
-import { Router } from "react-router";
 export default function Layout({ children }) {
     return (
         <div className="container mx-auto max-w-[1200px] max-md:px-2">
