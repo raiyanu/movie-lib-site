@@ -46,12 +46,11 @@ export default function MovieCard({ movie }) {
     };
 
     return (
-        <Card className="w-[300px] max-w-[97vw] gap-2 p-4">
-            <CardContent className="relative h-96 overflow-hidden rounded-md border p-0">
+        <Card className="w-[300px] max-w-[97vw] gap-2 overflow-hidden">
+            <CardContent className="relative h-96 overflow-hidden border p-0">
                 <img
                     src={movie.Poster}
                     className="h-full w-full max-w-[95vw] select-none object-cover"
-                    id="focus"
                     alt=""
                 />
                 <div
@@ -66,12 +65,17 @@ export default function MovieCard({ movie }) {
                 </div>
             </CardContent>
 
-            <CardFooter className="mt-3 grid grid-cols-[1fr_60px] gap-3 p-0">
-                <div className="text-content">
+            <CardFooter className="relative mt-3 grid grid-cols-[1fr_60px] gap-3 p-3">
+                <img
+                    src={movie.Poster}
+                    className="absolute -top-full left-4 max-w-20 select-none rounded-sm object-cover shadow-2xl shadow-[rgba(255,255,255,0.2)]"
+                    alt=""
+                />
+                <div className="text-content z-10">
                     <h3 className="line-clamp-2 scroll-m-20 text-2xl font-semibold tracking-tight">
                         {movie.Title}
                     </h3>
-                    <p className="h-12 scroll-m-20 overflow-hidden text-ellipsis tracking-tight text-zinc-600">
+                    <p className="line-clamp-3 h-12 scroll-m-20 overflow-hidden text-ellipsis text-xs tracking-tight text-zinc-600">
                         {movie.Plot}
                     </p>
                 </div>
