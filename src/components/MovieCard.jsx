@@ -8,8 +8,9 @@ import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-
+import { MovieDialogueContext } from '@/utils/MovieDialogueProvider'
 export default function MovieCard({ movie }) {
+    const { ExpandMovie } = useContext(MovieDialogueContext);
     const { toggleFavorite, isFavorite } = useContext(MovieContext);
     const [liked, setLiked] = useState(false);
     useEffect(() => {
@@ -60,7 +61,9 @@ export default function MovieCard({ movie }) {
                     >
                         {movie.Ratings[0].Value}
                     </Badge>
-                    <Button className="w-full">Read</Button>
+                    <Button className="w-full" onClick={() => {
+                        ExpandMovie(movie.imdbID)
+                    }}>Read</Button>
                 </div>
             </CardFooter>
         </Card>
