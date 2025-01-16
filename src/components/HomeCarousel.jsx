@@ -5,7 +5,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from 'embla-carousel-autoplay'
+import Autoplay from "embla-carousel-autoplay";
 import { Card, CardContent } from "@/components/ui/card";
 import { useContext, useEffect, useState } from "react";
 import { MovieContext } from "../utils/MovieContextProvider";
@@ -32,11 +32,11 @@ export default function HomeCarousel() {
             ]}
             opts={{
                 align: "start",
-                loop: "true"
+                loop: "true",
             }}
             className="h-fit"
         >
-            <CarouselContent>
+            <CarouselContent >
                 {movieList.map((movie, index) => (
                     <CarouselItemContent
                         key={"carouselItem" + index}
@@ -65,19 +65,19 @@ function CarouselItemContent({ movie }) {
     useEffect(() => {
         // setMovieFullData(async () => await fetchFullMovieData());
         async function run() {
-            let data = await fetchFullMovieData(movie.ids.imdb);
+            let data = await fetchFullMovieData(movie.imdbID);
             setMovieFullData(() => data);
         }
         run();
-    }, [movie.ids.imdb]);
+    }, [movie.imdbID]);
     return (
         <CarouselItem className="flex w-full items-center justify-center">
             <a
-                href={`/movie/${movie.ids.trakt}`}
+                href={`/movie/${movie.imdbID}`}
                 style={{ backgroundImage: `url(${movie.Poster})` }}
-                className="block h-36 w-[98%] overflow-hidden rounded-md bg-cover bg-center bg-no-repeat p-4 lg:h-60"
+                className="h-36 w-full max-w-[98%] overflow-hidden rounded-md bg-cover bg-center bg-no-repeat p-4 lg:h-60"
             >
-                <h2 className="w-fit text-3xl font-semibold text-zinc-50 xl:text-4xl">
+                <h2 className="w-fit max-w-full text-3xl font-semibold text-zinc-50 xl:text-3xl">
                     {movieFullData.Title}
                 </h2>
                 <span className="text-sm font-semibold">{`${movieFullData?.Ratings[0]?.Value}`}</span>
