@@ -14,7 +14,7 @@ import {
     SidebarFooter,
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 
 // Menu items.
@@ -41,9 +41,9 @@ export function AppSidebar() {
         <Sidebar>
             <SidebarHeader >
                 <div className="flex flex-wrap items-center justify-between">
-                    <div className="flex flex-wrap items-center gap-4 p-4">
+                    <Link to={"/"} className="flex flex-wrap items-center gap-4 p-4">
                         <img src='/logo.gif' height={40} width={30} alt="" srcSet="" /> M-Library
-                    </div>
+                    </Link>
                     <div className="hidden max-sm:block">
                         <SidebarHeader>
                             <SidebarTrigger />
