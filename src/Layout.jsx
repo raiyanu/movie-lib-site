@@ -6,17 +6,17 @@ import Navbar from './components/Navbar'
 export default function Layout({ children }) {
     return (
         <div className="container mx-auto max-w-[1200px] max-md:px-2">
-            <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-                <SidebarProvider>
+            <SidebarProvider>
+                <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
                     <AppSidebar />
-                    <div className="w-full px-2">
+                    <div className="max-w-full px-2">
                         <Navbar >
                             <SidebarTrigger />
                         </Navbar>
                         <main className=''>{children}</main>
                     </div>
-                </SidebarProvider>
-            </ThemeProvider>
+                </ThemeProvider>
+            </SidebarProvider>
         </div >
     )
 }

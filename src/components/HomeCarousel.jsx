@@ -71,7 +71,7 @@ function CarouselItemContent({ movie }) {
         run();
     }, [movie.imdbID]);
     return (
-        <CarouselItem className="flex w-full items-center justify-center">
+        <CarouselItem className="flex items-center justify-center">
             <a
                 href={`/movie/${movie.imdbID}`}
                 style={{ backgroundImage: `url(${movie.Poster})` }}

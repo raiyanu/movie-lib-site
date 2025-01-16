@@ -15,6 +15,20 @@ export default function MovieContextProvider({ children }) {
     async function isFavorite(id) {
         return loadFavoriteMovieDB().includes(id);
     }
+
+    async function getFavoriteList() {
+        const filteredList = await Promise.all(
+            getTrendingMoviePlaceHolder.map(async (movie) => {
+                if (await isFavorite(movie.imdbID)) {
+                    return movie;
+                }
+                return null;
+            })
+        );
+        const result = filteredList.filter(movie => movie !== null);
+        console.log(result);
+        return result;
+    }
     async function getTrendingMovie() {
         return getTrendingMoviePlaceHolder
     }
@@ -26,7 +40,8 @@ export default function MovieContextProvider({ children }) {
                 getTrendingMovieCarousel,
                 toggleFavorite,
                 isFavorite,
-                getTrendingMovie
+                getTrendingMovie,
+                getFavoriteList
             }}
         >
             {children}
@@ -331,6 +346,7 @@ const getTrendingMoviePlaceHolder = [
 
 
 const getTrendingMovieCarouselPlaceHolder = [
+
     {
         title: "300",
         Poster: "/300.jpg",
