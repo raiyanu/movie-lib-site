@@ -5,6 +5,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from 'embla-carousel-autoplay'
 import { Card, CardContent } from "@/components/ui/card";
 import { useContext, useEffect, useState } from "react";
 import { MovieContext } from "../utils/MovieContextProvider";
@@ -24,8 +25,14 @@ export default function HomeCarousel() {
 
     return (
         <Carousel
+            plugins={[
+                Autoplay({
+                    delay: 2000,
+                }),
+            ]}
             opts={{
                 align: "start",
+                loop: "true"
             }}
             className="h-fit"
         >
@@ -38,7 +45,7 @@ export default function HomeCarousel() {
                     />
                 ))}
             </CarouselContent>
-            <div className="relative mt-2 flex w-full items-center justify-center gap-4 *:block">
+            <div className="relative mt-2 flex w-full items-center justify-end gap-4 *:block">
                 <CarouselPrevious />
                 <CarouselNext />
             </div>
