@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MovieContext } from "@/utils/MovieContextProvider";
@@ -8,7 +8,7 @@ import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { MovieDialogueContext } from '@/utils/MovieDialogueProvider'
+import { MovieDialogueContext } from "@/utils/MovieDialogueProvider";
 export default function MovieCard({ movie }) {
     const { ExpandMovie } = useContext(MovieDialogueContext);
     const { toggleFavorite, isFavorite } = useContext(MovieContext);
@@ -19,7 +19,28 @@ export default function MovieCard({ movie }) {
     }, [movie.imdbID]);
     const togglingFavorite = () => {
         async function run() {
-            setLiked(await toggleFavorite(movie.imdbID));
+            let toggled = await toggleFavorite(movie.imdbID);
+            setLiked(toggled);
+            const showToast = (turnedFavorite) => {
+                const args = [(turnedFavorite ? "Added to Favorite List" : "Removed from Favorite List"), {
+                    description: `Movie Name : ${movie.Title}`,
+                    action: {
+                        label: "Undo",
+                        onClick: async () => {
+                            toggled = await toggleFavorite(movie.imdbID)
+                            setLiked(toggled);
+                            showToast(toggled);
+                        },
+                    },
+                }]
+                if (turnedFavorite) {
+                    toast.success(...args);
+                } else {
+                    toast(...args);
+                }
+                console.log("Showing toast")
+            }
+            showToast(toggled);
         }
         run();
     };
@@ -61,9 +82,14 @@ export default function MovieCard({ movie }) {
                     >
                         {movie.Ratings[0].Value}
                     </Badge>
-                    <Button className="w-full" onClick={() => {
-                        ExpandMovie(movie.imdbID)
-                    }}>Read</Button>
+                    <Button
+                        className="w-full"
+                        onClick={() => {
+                            ExpandMovie(movie.imdbID);
+                        }}
+                    >
+                        Read
+                    </Button>
                 </div>
             </CardFooter>
         </Card>
