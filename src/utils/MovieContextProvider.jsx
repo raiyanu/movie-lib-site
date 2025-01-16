@@ -30,6 +30,7 @@ export default function MovieContextProvider({ children }) {
         return result;
     }
     async function getTrendingMovie() {
+
         return getTrendingMoviePlaceHolder
     }
 

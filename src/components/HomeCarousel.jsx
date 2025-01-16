@@ -34,9 +34,9 @@ export default function HomeCarousel() {
                 align: "start",
                 loop: "true",
             }}
-            className="h-fit"
+            className="h-fit max-w-full"
         >
-            <CarouselContent >
+            <CarouselContent>
                 {movieList.map((movie, index) => (
                     <CarouselItemContent
                         key={"carouselItem" + index}
