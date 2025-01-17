@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useContext, Suspense, lazy, useRef } from 'react';
 // import MovieFeed from "@/section/MovieFeed";
-const MovieFeed = lazy(() => import("@/section/MovieFeed"));
+const MovieCardContainer = lazy(() => import("@/section/MovieCardContainer"));
 import HomeCarousel from '../components/HomeCarousel';
 import { MovieContext } from '@/utils/MovieContextProvider';
 import {
@@ -17,6 +17,7 @@ export default function Home() {
     const { getTrendingMovie, feedLoading } = useContext(MovieContext);
     const [moviesList, setMoviesList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const ref = useRef(null)
 
     const changePage = (pageNumber) => {
         if ("<" === pageNumber && currentPage > 1) {
@@ -28,7 +29,7 @@ export default function Home() {
         }
         console.log(pageNumber);
         console.log(currentPage);
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
     }
 
     useEffect(() => {
@@ -49,12 +50,12 @@ export default function Home() {
 
 
     return (
-        <div className='max-w-full overflow-x-clip pb-52'>
+        <div className='max-w-full overflow-x-clip pb-52' ref={ref}>
             <Suspense fallback={<HalfSceenLoader />}>
                 <HomeCarousel />
                 {
                     feedLoading ? <HalfSceenLoader /> :
-                        <MovieFeed moviesList={moviesList} />
+                        <MovieCardContainer moviesList={moviesList} />
                 }
                 <Pagination className="my-4">
                     <PaginationContent className="*:cursor-pointer *:select-none">

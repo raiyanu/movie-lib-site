@@ -50,10 +50,11 @@ export default function MovieContextProvider({ children }) {
             return response.data;
         } catch (error) {
             console.log(error)
-            toast("Error fetching data", `<span>${error.message}</span>`);
+            toast.error("Error fetching data", `<span>${error.message}</span>`);
             return [];
         }
     };
+
 
     async function getTrendingMovieCarousel() {
         return getTrendingMovieCarouselPlaceHolder;
@@ -80,7 +81,6 @@ export default function MovieContextProvider({ children }) {
         return FavoriteList;
     }
 
-
     async function isFavorite(id) {
         return loadFavoriteMovieDB().includes(id);
     }
@@ -89,6 +89,30 @@ export default function MovieContextProvider({ children }) {
         const toggled = toggleFavoriteDB(id)
         updateFavoriteMovieState();
         return toggled;
+    }
+
+    async function searchMedia(option = "title", searchInput) {
+        setIsLoading(() => true);
+        try {
+            let data = await fetchIt(`/search`, { params: { type: "movie", query: searchInput ? searchInput : "tron legacy" } });
+            console.log(" Before filtering movie", data);
+            data = data.filter((movie) => movie.type === "movie")
+            console.log(" after filtering movie", data);
+
+            if (data) {
+                const summarizedData = await Promise.all(
+                    data.map((movie) => getMovieSummary(movie.movie.ids.imdb))
+                );
+                setTrendingMovies(summarizedData);
+                setIsLoading(() => false);
+                return summarizedData.filter((movie => !(movie.Response === "False")));
+            }
+        } catch (error) {
+            console.error("Error fetching movies:", error);
+            setIsLoading(() => false);
+            toast.error("Error fetching data", `<span>${error.message}</span>`);
+            return [];
+        }
     }
     return (
         <MovieContext.Provider
@@ -101,7 +125,8 @@ export default function MovieContextProvider({ children }) {
                 favoriteMovie,
                 getMovieSummary,
                 failedFetchPlaceHolder,
-                feedLoading: isLoading
+                feedLoading: isLoading,
+                searchMedia
             }}
         >
             {children}

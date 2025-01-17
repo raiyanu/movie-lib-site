@@ -44,6 +44,8 @@ export default function MovieCard({ movie }) {
         }
         run();
     };
+    console.log(movie);
+
 
     return (
         <Card className="w-[280px] max-w-[97vw] gap-2 overflow-hidden">
@@ -71,7 +73,7 @@ export default function MovieCard({ movie }) {
                     className="absolute -top-full left-4 max-w-20 select-none rounded-sm object-cover shadow-2xl shadow-[rgba(255,255,255,0.2)]"
                     alt=""
                 />
-                <div className="text-content z-10">
+                <div className="text-content z-[1]">
                     <h3 className="line-clamp-1 scroll-m-20 text-2xl font-semibold tracking-tight">
                         {movie.Title}
                     </h3>
@@ -84,7 +86,7 @@ export default function MovieCard({ movie }) {
                         variant="outline"
                         className="block w-full bg-red-400 p-0 text-center"
                     >
-                        {movie.Ratings[0].Value}
+                        {movie?.Ratings?.[0]?.Value}
                     </Badge>
                     <Button
                         className="w-full"
