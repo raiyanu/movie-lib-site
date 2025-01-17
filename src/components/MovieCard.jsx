@@ -47,7 +47,7 @@ export default function MovieCard({ movie }) {
     };
 
     return (
-        <Card className="w-[300px] max-w-[97vw] gap-2 overflow-hidden">
+        <Card className="w-[280px] max-w-[97vw] gap-2 overflow-hidden">
             <CardContent className="relative h-96 overflow-hidden border p-0">
                 <img
                     src={movie.Poster}
@@ -73,7 +73,7 @@ export default function MovieCard({ movie }) {
                     alt=""
                 />
                 <div className="text-content z-10">
-                    <h3 className="line-clamp-2 scroll-m-20 text-2xl font-semibold tracking-tight">
+                    <h3 className="line-clamp-1 scroll-m-20 text-2xl font-semibold tracking-tight">
                         {movie.Title}
                     </h3>
                     <p className="line-clamp-3 h-12 scroll-m-20 overflow-hidden text-ellipsis text-xs tracking-tight text-zinc-600">
