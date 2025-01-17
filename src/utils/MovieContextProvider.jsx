@@ -77,6 +77,7 @@ export default function MovieContextProvider({ children }) {
     async function isFavorite(id) {
         return loadFavoriteMovieDB().includes(id);
     }
+
     async function toggleFavorite(id) {
         const toggled = toggleFavoriteDB(id)
         updateFavoriteMovieState();
@@ -88,8 +89,11 @@ export default function MovieContextProvider({ children }) {
                 trendingMovies,
                 getTrendingMovie,
                 getTrendingMovieCarousel,
-                isFavorite, toggleFavorite,
-                favoriteMovie
+                isFavorite,
+                toggleFavorite,
+                favoriteMovie,
+                getMovieSummary,
+                failedFetchPlaceHolder
             }}
         >
             {children}
@@ -104,47 +108,7 @@ async function getMovieSummary(id, options = {}) {
         toast("An Error occured While trying to fetch movie summary", `<span class="text-red-600">${error?.message}</span>`);
         return false;
     });
-    return data ? data : {
-        Title: "--",
-        Year: "--",
-        Rated: "--",
-        Released: "--",
-        Runtime: "--",
-        Genre: "--",
-        Director: "--",
-        Writer: "--",
-        Actors: "--",
-        Plot: "--",
-        Language: "--",
-        Country: "--",
-        Awards: "--",
-        Poster:
-            "https://placehold.co/300x500/png?text=Couldn%27t+image",
-        Ratings: [
-            {
-                Source: "--",
-                Value: "--",
-            },
-            {
-                Source: "--",
-                Value: "--",
-            },
-            {
-                Source: "--",
-                Value: "--",
-            },
-        ],
-        Metascore: "--",
-        imdbRating: "--",
-        imdbVotes: "--",
-        imdbID: "--",
-        Type: "--",
-        DVD: "--",
-        BoxOffice: "--",
-        Production: "--",
-        Website: "--",
-        Response: "--",
-    }
+    return data ? data : failedFetchPlaceHolder;
 }
 
 
@@ -507,3 +471,45 @@ const getTrendingMovieCarouselPlaceHolder = [
         imdbID: "tt1430132"
     },
 ];
+
+const failedFetchPlaceHolder = {
+    Title: "--",
+    Year: "--",
+    Rated: "--",
+    Released: "--",
+    Runtime: "--",
+    Genre: "--",
+    Director: "--",
+    Writer: "--",
+    Actors: "--",
+    Plot: "--",
+    Language: "--",
+    Country: "--",
+    Awards: "--",
+    Poster:
+        "https://placehold.co/300x500/png?text=Couldn%27t+image",
+    Ratings: [
+        {
+            Source: "--",
+            Value: "--",
+        },
+        {
+            Source: "--",
+            Value: "--",
+        },
+        {
+            Source: "--",
+            Value: "--",
+        },
+    ],
+    Metascore: "--",
+    imdbRating: "--",
+    imdbVotes: "--",
+    imdbID: "--",
+    Type: "--",
+    DVD: "--",
+    BoxOffice: "--",
+    Production: "--",
+    Website: "--",
+    Response: "--",
+}
