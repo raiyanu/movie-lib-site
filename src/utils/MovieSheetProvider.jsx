@@ -1,10 +1,10 @@
 import { createContext, useState } from "react"
 
-import MovieDialogue from '@/components/MovieDialogue.jsx'
+import MovieSheet from "@/components/MovieSheet";
 
-export const MovieDialogueContext = createContext();
+export const MovieSheetContext = createContext();
 
-export default function MovieDialogueProvider({ children }) {
+export default function MovieSheetProvider({ children }) {
     const [open, setOpen] = useState(false);
     const [id, setId] = useState(null);
     const [movie, setMovie] = useState(undefined);
@@ -13,14 +13,13 @@ export default function MovieDialogueProvider({ children }) {
         setOpen(() => true);
         setMovie(() => movie);
         console.log(id);
-
     }
 
     return (
-        <MovieDialogueContext.Provider value={{ ExpandMovie }}>
+        <MovieSheetContext.Provider value={{ ExpandMovie }}>
             {children}
-            <MovieDialogue id={id} open={open} setOpen={setOpen} movie={movie} />
-        </MovieDialogueContext.Provider>
+            <MovieSheet id={id} open={open} onOpenChange={setOpen} movie={movie} />
+        </MovieSheetContext.Provider>
     )
 }
 

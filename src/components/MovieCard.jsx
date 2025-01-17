@@ -8,9 +8,9 @@ import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { MovieDialogueContext } from "@/utils/MovieDialogueProvider";
+import { MovieSheetContext } from "@/utils/MovieSheetProvider";
 export default function MovieCard({ movie }) {
-    const { ExpandMovie } = useContext(MovieDialogueContext);
+    const { ExpandMovie } = useContext(MovieSheetContext);
     const { toggleFavorite, isFavorite } = useContext(MovieContext);
     const [liked, setLiked] = useState(false);
     useEffect(() => {
@@ -91,7 +91,7 @@ export default function MovieCard({ movie }) {
                     <Button
                         className="w-full"
                         onClick={() => {
-                            ExpandMovie(movie.imdbID);
+                            ExpandMovie(movie.imdbID, movie);
                         }}
                     >
                         Read

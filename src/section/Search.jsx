@@ -16,7 +16,7 @@ export default function Search() {
             setmMoviesList(data);
         }
         run();
-    }, [])
+    }, [params.searchType, params.searchInput])
     return (
         <div>
             <Suspense fallback={<HalfSceenLoader />}>
