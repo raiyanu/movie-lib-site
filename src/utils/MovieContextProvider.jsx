@@ -9,13 +9,18 @@ export const MovieContext = createContext(null);
 export default function MovieContextProvider({ children }) {
     const [trendingMovies, setTrendingMovies] = useState([]);
     const [favoriteMovie, setFavoriteMovie] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        getTrendingMovie(1);
-        updateFavoriteMovieState();
+        const run = async () => {
+            await getTrendingMovie(1);
+            await updateFavoriteMovieState();
+        }
+        run();
     }, []);
 
     async function getTrendingMovie(page = 1, limit = 12) {
+        setIsLoading(() => true);
         try {
             const data = await fetchIt(`/movies/popular`, { params: { page, limit } });
             if (data) {
@@ -23,10 +28,12 @@ export default function MovieContextProvider({ children }) {
                     data.map((movie) => getMovieSummary(movie.ids.imdb))
                 );
                 setTrendingMovies(summarizedData);
+                setIsLoading(() => false);
                 return summarizedData;
             }
         } catch (error) {
             console.error("Error fetching movies:", error);
+            setIsLoading(() => false);
             return [];
         }
     }
@@ -93,7 +100,8 @@ export default function MovieContextProvider({ children }) {
                 toggleFavorite,
                 favoriteMovie,
                 getMovieSummary,
-                failedFetchPlaceHolder
+                failedFetchPlaceHolder,
+                feedLoading: isLoading
             }}
         >
             {children}

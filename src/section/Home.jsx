@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
-import MovieFeed from "@/section/MovieFeed";
+// import MovieFeed from "@/section/MovieFeed";
+const MovieFeed = lazy(() => import("@/section/MovieFeed"));
 import HomeCarousel from '../components/HomeCarousel';
 import { MovieContext } from '@/utils/MovieContextProvider';
 import {
@@ -13,7 +14,7 @@ import {
 } from "@/components/ui/pagination"
 
 export default function Home() {
-    const { getTrendingMovie } = useContext(MovieContext);
+    const { getTrendingMovie, feedLoading } = useContext(MovieContext);
     const [moviesList, setMoviesList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,6 +28,7 @@ export default function Home() {
         }
         console.log(pageNumber);
         console.log(currentPage);
+        window.scrollTo(0, 0)
     }
 
     useEffect(() => {
@@ -45,17 +47,23 @@ export default function Home() {
         fetchMovies();
     }, [currentPage]);
 
+
     return (
         <div className='max-w-full overflow-x-clip pb-52'>
-            <HomeCarousel />
-            <MovieFeed moviesList={moviesList} />
-            <Pagination className="my-4">
-                <PaginationContent className="*:cursor-pointer *:select-none">
-                    {
-                        renderPageButtons(5, currentPage, changePage)
-                    }
-                </PaginationContent>
-            </Pagination>
+            <Suspense fallback={<HalfSceenLoader />}>
+                <HomeCarousel />
+                {
+                    feedLoading ? <HalfSceenLoader /> :
+                        <MovieFeed moviesList={moviesList} />
+                }
+                <Pagination className="my-4">
+                    <PaginationContent className="*:cursor-pointer *:select-none">
+                        {
+                            renderPageButtons(5, currentPage, changePage)
+                        }
+                    </PaginationContent>
+                </Pagination>
+            </Suspense>
         </div>
     );
 }
@@ -81,8 +89,14 @@ const renderPageButtons = (noOfPage, currentPage, handleOptionChange) => {
                 </PaginationLink>
             </PaginationItem>
         );
-
     }
+    // if (!(currentPage === noOfPage)) {
+    //     elements.push(
+    //         <PaginationItem key={`PreviousButton-th-ellipse`} >
+    //             <PaginationEllipsis />
+    //         </PaginationItem>
+    //     )
+    // }
 
     if (!(currentPage === noOfPage)) {
         elements.push(
@@ -93,3 +107,11 @@ const renderPageButtons = (noOfPage, currentPage, handleOptionChange) => {
     }
     return elements;
 };
+
+export function HalfSceenLoader() {
+    return (
+        <div className="my-4 grid h-[300px] w-full place-content-center">
+            <span className='loader'></span>
+        </div>
+    )
+}
