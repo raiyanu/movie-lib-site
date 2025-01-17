@@ -11,11 +11,8 @@ export default function Home() {
         const fetchMovies = async () => {
             try {
                 const result = await getTrendingMovie(1);
-                console.log("Fetched Movies:", result);
-
                 if (Array.isArray(result)) {
-                    console.log("Setting moviesList:", result);
-                    setMoviesList([...result]); // Update the state
+                    setMoviesList([...result]);
                 } else {
                     console.error("Expected an array, but got:", result);
                 }
@@ -26,11 +23,6 @@ export default function Home() {
 
         fetchMovies();
     }, []);
-
-    useEffect(() => {
-        // Log moviesList whenever it changes
-        console.log("moviesList updated:", moviesList);
-    }, [moviesList]);
 
     return (
         <div className='max-w-full overflow-x-clip pb-52'>

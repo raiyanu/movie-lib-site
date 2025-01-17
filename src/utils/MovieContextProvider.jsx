@@ -11,7 +11,7 @@ export default function MovieContextProvider({ children }) {
     const [favoriteMovie, setFavoriteMovie] = useState([]);
 
     useEffect(() => {
-        getTrendingMovie(1); // Fetch initial data
+        getTrendingMovie(1);
         updateFavoriteMovieState();
     }, []);
 
@@ -55,7 +55,6 @@ export default function MovieContextProvider({ children }) {
     async function updateFavoriteMovieState() {
         const run = async () => {
             const favoriteMovieList = await getFavoriteList(await loadFavoriteMovieDB())
-            console.log(favoriteMovieList);
             setFavoriteMovie(favoriteMovieList);
         }
         run();
@@ -63,17 +62,14 @@ export default function MovieContextProvider({ children }) {
 
     async function getFavoriteList() {
         const favoriteMovieDBList = await loadFavoriteMovieDB();
-        console.log(favoriteMovieDBList);
 
         const FavoriteList = [];
         for (const movieID of favoriteMovieDBList) {
             const movieSummary = await getMovieSummary(movieID);
             FavoriteList.push(movieSummary);
-            console.log(FavoriteList);
         }
 
         setFavoriteMovie(() => FavoriteList);
-        console.log(FavoriteList);
         return FavoriteList;
     }
 
@@ -82,8 +78,9 @@ export default function MovieContextProvider({ children }) {
         return loadFavoriteMovieDB().includes(id);
     }
     async function toggleFavorite(id) {
-        toggleFavoriteDB(id);
+        const toggled = toggleFavoriteDB(id)
         updateFavoriteMovieState();
+        return toggled;
     }
     return (
         <MovieContext.Provider

@@ -16,7 +16,6 @@ export default function MovieCard({ movie }) {
     useEffect(() => {
         const run = async () => setLiked(await isFavorite(movie.imdbID));
         run();
-        console.log("Rendering card");
     }, [movie.imdbID]);
     const togglingFavorite = () => {
         async function run() {
