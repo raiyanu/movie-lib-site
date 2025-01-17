@@ -1,14 +1,18 @@
 import { createContext, useState, useEffect } from "react";
-import { loadFavoriteMovieDB, toggleFavorite } from "./PersistentStorage";
+import { toggleFavoriteDB, updateFavoriteMovieDB, loadFavoriteMovieDB } from "./PersistentStorage";
 import { toast } from "sonner";
 import axios from "axios";
+import config from "../../config";
+
 export const MovieContext = createContext(null);
 
 export default function MovieContextProvider({ children }) {
     const [trendingMovies, setTrendingMovies] = useState([]);
+    const [favoriteMovie, setFavoriteMovie] = useState([]);
 
     useEffect(() => {
         getTrendingMovie(1); // Fetch initial data
+        updateFavoriteMovieState();
     }, []);
 
     async function getTrendingMovie(page = 1, limit = 12) {
@@ -27,28 +31,59 @@ export default function MovieContextProvider({ children }) {
         }
     }
 
-    const fetchIt = async (url, options) => {
+    async function fetchIt(url, options) {
         try {
-            const response = await axios.get(`https://api.trakt.tv${url}`, {
+            const response = await axios.get(`${config.API_1}${url}`, {
                 ...options,
                 headers: {
                     "trakt-api-version": "2",
-                    "trakt-api-key": "bd54c946bcb5bff47dea772fbbf64f7ab0582760aca5904c25aebe3eb5a03599",
+                    "trakt-api-key": config.API_1_API_KEY,
                 },
             });
             return response.data;
         } catch (error) {
             console.log(error)
             toast("Error fetching data", `<span>${error.message}</span>`);
-            return false;
+            return [];
         }
     };
+
     async function getTrendingMovieCarousel() {
         return getTrendingMovieCarouselPlaceHolder;
     }
 
+    async function updateFavoriteMovieState() {
+        const run = async () => {
+            const favoriteMovieList = await getFavoriteList(await loadFavoriteMovieDB())
+            console.log(favoriteMovieList);
+            setFavoriteMovie(favoriteMovieList);
+        }
+        run();
+    }
+
+    async function getFavoriteList() {
+        const favoriteMovieDBList = await loadFavoriteMovieDB();
+        console.log(favoriteMovieDBList);
+
+        const FavoriteList = [];
+        for (const movieID of favoriteMovieDBList) {
+            const movieSummary = await getMovieSummary(movieID);
+            FavoriteList.push(movieSummary);
+            console.log(FavoriteList);
+        }
+
+        setFavoriteMovie(() => FavoriteList);
+        console.log(FavoriteList);
+        return FavoriteList;
+    }
+
+
     async function isFavorite(id) {
         return loadFavoriteMovieDB().includes(id);
+    }
+    async function toggleFavorite(id) {
+        toggleFavoriteDB(id);
+        updateFavoriteMovieState();
     }
     return (
         <MovieContext.Provider
@@ -56,7 +91,8 @@ export default function MovieContextProvider({ children }) {
                 trendingMovies,
                 getTrendingMovie,
                 getTrendingMovieCarousel,
-                isFavorite
+                isFavorite, toggleFavorite,
+                favoriteMovie
             }}
         >
             {children}

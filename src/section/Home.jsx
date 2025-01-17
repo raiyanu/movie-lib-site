@@ -10,7 +10,7 @@ export default function Home() {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const result = await getTrendingMovie(2);
+                const result = await getTrendingMovie(1);
                 console.log("Fetched Movies:", result);
 
                 if (Array.isArray(result)) {
