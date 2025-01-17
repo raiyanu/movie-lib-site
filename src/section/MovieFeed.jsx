@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
-import HomeCarousel from '../components/HomeCarousel'
-import MovieCard from '../components/MovieCard'
-import MovieDialogueProvider from '@/utils/MovieDialogueProvider'
-import { MovieContext } from '@/utils/MovieContextProvider'
-import { useContext } from 'react'
-import { useEffect } from 'react'
-export default function MovieFeed({ moviesList }) {
+import React, { useState, useEffect, useContext } from "react";
+import HomeCarousel from "../components/HomeCarousel";
+import MovieCard from "../components/MovieCard";
+import MovieDialogueProvider from "@/utils/MovieDialogueProvider";
+import { MovieContext } from "@/utils/MovieContextProvider";
 
+export default function MovieFeed({ moviesList }) {
+    useEffect(() => {
+        console.log(moviesList);
+    }, []);
     return (
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <MovieDialogueProvider>
+        <MovieDialogueProvider>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
                 {
-                    moviesList.map((movie, index) => <MovieCard movie={movie} key={`MovieFeedCard-${index}`} />)
+                    moviesList.map((movie, index) => {
+                        console.log(`Rendering MovieCard for movie:`, movie);
+                        return <MovieCard movie={movie} key={`MovieFeedCard-${index}`} />;
+                    })
                 }
-            </MovieDialogueProvider>
-        </div>
-    )
+            </div>
+        </MovieDialogueProvider>
+    );
 }

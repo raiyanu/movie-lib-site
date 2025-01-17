@@ -1,13 +1,48 @@
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import { loadFavoriteMovieDB, toggleFavorite } from "./PersistentStorage";
-
+import { toast } from "sonner";
+import axios from "axios";
 export const MovieContext = createContext(null);
 
 export default function MovieContextProvider({ children }) {
-    async function trendingMovieList(count) {
-        return count;
+    const [trendingMovies, setTrendingMovies] = useState([]);
+
+    useEffect(() => {
+        getTrendingMovie(1); // Fetch initial data
+    }, []);
+
+    async function getTrendingMovie(page = 1, limit = 12) {
+        try {
+            const data = await fetchIt(`/movies/popular`, { params: { page, limit } });
+            if (data) {
+                const summarizedData = await Promise.all(
+                    data.map((movie) => getMovieSummary(movie.ids.imdb))
+                );
+                setTrendingMovies(summarizedData);
+                return summarizedData;
+            }
+        } catch (error) {
+            console.error("Error fetching movies:", error);
+            return [];
+        }
     }
 
+    const fetchIt = async (url, options) => {
+        try {
+            const response = await axios.get(`https://api.trakt.tv${url}`, {
+                ...options,
+                headers: {
+                    "trakt-api-version": "2",
+                    "trakt-api-key": "bd54c946bcb5bff47dea772fbbf64f7ab0582760aca5904c25aebe3eb5a03599",
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error)
+            toast("Error fetching data", `<span>${error.message}</span>`);
+            return false;
+        }
+    };
     async function getTrendingMovieCarousel() {
         return getTrendingMovieCarouselPlaceHolder;
     }
@@ -15,40 +50,70 @@ export default function MovieContextProvider({ children }) {
     async function isFavorite(id) {
         return loadFavoriteMovieDB().includes(id);
     }
-
-    async function getFavoriteList() {
-        const filteredList = await Promise.all(
-            getTrendingMoviePlaceHolder.map(async (movie) => {
-                if (await isFavorite(movie.imdbID)) {
-                    return movie;
-                }
-                return null;
-            })
-        );
-        const result = filteredList.filter(movie => movie !== null);
-        console.log(result);
-        return result;
-    }
-    async function getTrendingMovie() {
-
-        return getTrendingMoviePlaceHolder
-    }
-
     return (
         <MovieContext.Provider
             value={{
-                trendingMovieList,
-                getTrendingMovieCarousel,
-                toggleFavorite,
-                isFavorite,
+                trendingMovies,
                 getTrendingMovie,
-                getFavoriteList
+                getTrendingMovieCarousel,
+                isFavorite
             }}
         >
             {children}
         </MovieContext.Provider>
     );
 }
+
+async function getMovieSummary(id, options = {}) {
+    const data = await axios.get(`https://www.omdbapi.com/?&apikey=9e86699a&i=${id}`, {
+        ...options
+    }).then((result) => result.data).catch(error => {
+        toast("An Error occured While trying to fetch movie summary", `<span class="text-red-600">${error?.message}</span>`);
+        return false;
+    });
+    return data ? data : {
+        Title: "--",
+        Year: "--",
+        Rated: "--",
+        Released: "--",
+        Runtime: "--",
+        Genre: "--",
+        Director: "--",
+        Writer: "--",
+        Actors: "--",
+        Plot: "--",
+        Language: "--",
+        Country: "--",
+        Awards: "--",
+        Poster:
+            "https://placehold.co/300x500/png?text=Couldn%27t+image",
+        Ratings: [
+            {
+                Source: "--",
+                Value: "--",
+            },
+            {
+                Source: "--",
+                Value: "--",
+            },
+            {
+                Source: "--",
+                Value: "--",
+            },
+        ],
+        Metascore: "--",
+        imdbRating: "--",
+        imdbVotes: "--",
+        imdbID: "--",
+        Type: "--",
+        DVD: "--",
+        BoxOffice: "--",
+        Production: "--",
+        Website: "--",
+        Response: "--",
+    }
+}
+
 
 const getTrendingMoviePlaceHolder = [
     {
