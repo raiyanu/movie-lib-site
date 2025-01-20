@@ -13,9 +13,11 @@ export default function MovieCard({ movie }) {
     const { ExpandMovie } = useContext(MovieSheetContext);
     const { toggleFavorite, isFavorite } = useContext(MovieContext);
     const [liked, setLiked] = useState(false);
+    const [Censor, setCensor] = useState(true);
     useEffect(() => {
         const run = async () => setLiked(await isFavorite(movie.imdbID));
         run();
+        setCensor(!(movie.Rated == "PG-13" || movie.Rated == "R" || movie.Rated == "unrated"))
     }, [movie.imdbID]);
     const togglingFavorite = () => {
         async function run() {
@@ -45,6 +47,7 @@ export default function MovieCard({ movie }) {
         run();
     };
     console.log(movie);
+    const unCensorIt = () => setCensor(false);
 
 
     return (
@@ -52,8 +55,9 @@ export default function MovieCard({ movie }) {
             <CardContent className="relative h-96 overflow-hidden border p-0">
                 <img
                     src={movie.Poster}
-                    className="h-full w-full max-w-[95vw] select-none object-cover"
+                    className={`h-full w-full max-w-[95vw] select-none object-cover  ${Censor ? "blur-lg cursor-pointer" : ""}`}
                     alt=""
+                    onClick={unCensorIt}
                 />
                 <div
                     className="absolute right-2 top-2 flex aspect-square cursor-pointer items-center justify-center rounded-full border bg-black p-1"
@@ -67,13 +71,20 @@ export default function MovieCard({ movie }) {
                 </div>
             </CardContent>
 
-            <CardFooter className="relative mt-3 grid grid-cols-[1fr_60px] gap-3 p-3">
-                <img
+            <CardFooter className="relative grid grid-cols-[1fr_60px] gap-3 p-3">
+                {/* <img
                     src={movie.Poster}
                     className="absolute -top-full left-4 max-w-20 select-none rounded-sm object-cover shadow-2xl shadow-[rgba(255,255,255,0.2)]"
                     alt=""
-                />
-                <div className="text-content z-[1]">
+                /> */}
+                <div className="text-content">
+
+                    <Badge
+                        variant="outline"
+                        className="bg-red-500 p-0 px-2 text-center text-xs"
+                    >
+                        Rated {movie?.Rated}
+                    </Badge>
                     <h3 className="line-clamp-1 scroll-m-20 text-2xl font-semibold tracking-tight">
                         {movie.Title}
                     </h3>
@@ -84,7 +95,7 @@ export default function MovieCard({ movie }) {
                 <div className="flex h-full flex-col justify-between">
                     <Badge
                         variant="outline"
-                        className="block w-full bg-red-400 p-0 text-center"
+                        className="block w-full p-0 text-center"
                     >
                         {movie?.Ratings?.[0]?.Value}
                     </Badge>

@@ -94,9 +94,10 @@ export default function MovieContextProvider({ children }) {
     async function searchMedia(option = "title", searchInput) {
         setIsLoading(() => true);
         try {
-            let data = await fetchIt(`/search`, { params: { type: "movie", query: searchInput ? searchInput : "tron legacy" } });
+            let data = await fetchIt(`/search`, { params: { type: "movie", certifications: "pg-13", query: searchInput ? searchInput : "tron legacy" } });
             console.log(" Before filtering movie", data);
-            data = data.filter((movie) => movie.type === "movie")
+            data = data.filter((movie) => movie.type === "movie");
+            // data = data.filter(movie => movie.certification === "PG-13"); // TODO: Doesn't work
             console.log(" after filtering movie", data);
 
             if (data) {

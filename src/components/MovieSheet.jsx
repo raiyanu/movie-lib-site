@@ -8,9 +8,14 @@ import {
     SheetFooter
 } from "@/components/ui/sheet"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function MovieSheet({ id, open, onOpenChange, movie }) {
+    const [Censor, setCensor] = useState(true);
+    useEffect(() => {
+        setCensor(!(movie?.Rated == "PG-13" || movie?.Rated == "R" || movie?.Rated == "unrated"))
+    }, [])
+    const unCensorIt = () => setCensor(false);
     return (
         <Sheet open={open} onOpenChange={onOpenChange} movie={movie}>
             <SheetContent className="w-[100vw] !max-w-[70vh] overflow-y-scroll">
@@ -18,8 +23,9 @@ export default function MovieSheet({ id, open, onOpenChange, movie }) {
                     <SheetTitle>{movie?.Title ? movie.Title : "N/A"}</SheetTitle>
                     <img
                         src={movie?.Poster ? movie.Poster : ""}
-                        className="mt-4 h-full w-full max-w-[95vw] select-none rounded-sm object-cover"
+                        className={`mt-4 h-full w-full max-w-[95vw] select-none rounded-sm object-cover ${Censor ? "blur-lg cursor-pointer" : ""}`}
                         alt=""
+                        onClick={unCensorIt}
                     />
                     <SheetDescription>
                         <div className="mb-2 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 *:flex-shrink-0">

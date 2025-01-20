@@ -82,28 +82,7 @@ export function AppSidebar() {
             <SidebarFooter>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <SidebarMenuButton>
-                                    Other
-                                    <ChevronUp className="ml-auto" />
-                                </SidebarMenuButton>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                side="top"
-                                className="w-[--radix-popper-anchor-width]"
-                            >
-                                <DropdownMenuItem>
-                                    <span>Account</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <span>Billing</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <span>Sign out</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        {/* <ExtraDownDropContent /> */}
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarFooter>
@@ -111,7 +90,30 @@ export function AppSidebar() {
     )
 }
 
-
+const ExtraDownDropContent = () => {
+    return <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+            <SidebarMenuButton>
+                Other
+                <ChevronUp className="ml-auto" />
+            </SidebarMenuButton>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+            side="top"
+            className="w-[--radix-popper-anchor-width]"
+        >
+            <DropdownMenuItem>
+                <span>Account</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+                <span>Billing</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+                <span>Sign out</span>
+            </DropdownMenuItem>
+        </DropdownMenuContent>
+    </DropdownMenu>
+}
 
 // Menu items.
 const items_default = [
