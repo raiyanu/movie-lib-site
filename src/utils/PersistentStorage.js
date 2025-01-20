@@ -32,3 +32,7 @@ export function removeFavoriteMovieDB(id) {
     console.log(favorite);
     return false;
 }
+export function clearAwayMovieDB() {
+    localStorage.removeItem("FavoriteMovieDB");
+    console.log("clearing all the favorite lists");
+}

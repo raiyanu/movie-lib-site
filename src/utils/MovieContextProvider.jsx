@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { toggleFavoriteDB, updateFavoriteMovieDB, loadFavoriteMovieDB } from "./PersistentStorage";
+import { toggleFavoriteDB, updateFavoriteMovieDB, loadFavoriteMovieDB, clearAwayMovieDB } from "./PersistentStorage";
 import { toast } from "sonner";
 import axios from "axios";
 import config from "../../config";
@@ -114,6 +114,21 @@ export default function MovieContextProvider({ children }) {
             return [];
         }
     }
+
+    async function doClearAwayMovieDB() {
+        await clearAwayMovieDB();
+        await setFavoriteMovie([]);
+        const promise = () => new Promise((resolve) => setTimeout(() => resolve({ name: 'Favorite List' }), 2000));
+
+        toast.promise(promise, {
+            loading: 'Loading...',
+            success: (data) => {
+                return `${data.name} toast has been Cleared`;
+            },
+            error: 'Error',
+        });
+
+    }
     return (
         <MovieContext.Provider
             value={{
@@ -126,7 +141,8 @@ export default function MovieContextProvider({ children }) {
                 getMovieSummary,
                 failedFetchPlaceHolder,
                 feedLoading: isLoading,
-                searchMedia
+                searchMedia,
+                doClearAwayMovieDB
             }}
         >
             {children}
