@@ -36,7 +36,7 @@ export default function Navbar({ children }) {
             <div className="flex items-center justify-center">
                 <div className="flex gap-5">{children}</div>
                 <Link to="/" className="ml-2 flex flex-wrap items-center gap-4 md:hidden">
-                    <img src='/logo.gif' height={40} width={30} alt="" /> M-Library
+                    <img src='/favicon.ico' height={40} width={30} alt="" /> M-Library
                 </Link>
             </div>
             <Accordion collapsible className="max-h-fit border-b-0">

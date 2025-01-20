@@ -23,16 +23,19 @@ const items = [
         title: "Home",
         url: "/",
         icon: Home,
+        activeIcon: Home
     },
     {
         title: "Favorite",
         url: "/Favorite",
         icon: Heart,
+        activeIcon: Heart
     },
     {
         title: "Settings",
         url: "/settings",
         icon: Settings,
+        activeIcon: Settings
     },
 ]
 
@@ -42,7 +45,7 @@ export function AppSidebar() {
             <SidebarHeader >
                 <div className="flex flex-wrap items-center justify-between">
                     <Link to={"/"} className="flex flex-wrap items-center gap-4 p-4">
-                        <img src='/logo.gif' height={40} width={30} alt="" srcSet="" /> M-Library
+                        <img src='/favicon.ico' height={40} width={30} alt="" srcSet="" /> M-Library
                     </Link>
                     <div className="hidden max-sm:block">
                         <SidebarHeader>
@@ -63,7 +66,8 @@ export function AppSidebar() {
                                         {({ isActive }) => (
                                             <SidebarMenuButton asChild isActive={isActive}>
                                                 <div className="">
-                                                    <item.icon />
+                                                    {!isActive && <item.icon />}
+                                                    {isActive && <item.activeIcon fill="#fff" stroke="#a9a9a9" />}
                                                     {item.title}
                                                 </div>
                                             </SidebarMenuButton>
