@@ -27,16 +27,18 @@ export default function MovieSheet({ id, open, onOpenChange, movie }) {
                         alt=""
                         onClick={unCensorIt}
                     />
-                    <SheetDescription>
-                        <div className="mb-2 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 *:flex-shrink-0">
-                            <div className="flex justify-center gap-4">
-                                <p className="text-sm">
-                                    <strong>Released:</strong> {movie?.Released || 'N/A'}
-                                </p>
-                                <p className="text-sm">
-                                    <strong>Year:</strong> {movie?.Year || 'N/A'}
-                                </p>
-                            </div>
+                    <SheetDescription className="flex flex-col gap-8">
+                        <div className="text-start">
+                            <strong className="w-full text-start text-lg text-gray-600">Plot:</strong>
+                            <p className="text-sm">{movie?.Plot || 'N/A'}</p>
+                        </div>
+                        <div className="mb-2 grid place-content-start gap-x-2 text-start md:grid-cols-2">
+                            <p className="text-sm">
+                                <strong>Released:</strong> {movie?.Released || 'N/A'}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Year:</strong> {movie?.Year || 'N/A'}
+                            </p>
                             <p className="text-sm">
                                 <strong>Rated:</strong> {movie?.Rated || 'N/A'}
                             </p>
@@ -63,10 +65,6 @@ export default function MovieSheet({ id, open, onOpenChange, movie }) {
                                 <strong>IMDBRating:</strong> {movie?.imdbRating || 'N/A'} {"( "}
                                 vote: {movie?.imdbVotes || 'N/A'} {" )"}
                             </p>
-                        </div>
-                        <div>
-                            <strong className="text-lg text-gray-600">Plot:</strong>
-                            <p className="text-sm">{movie?.Plot || 'N/A'}</p>
                         </div>
                     </SheetDescription>
                 </SheetHeader>
