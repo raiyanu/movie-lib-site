@@ -6,12 +6,8 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { Card, CardContent } from "@/components/ui/card";
 import { useContext, useEffect, useState } from "react";
 import { MovieContext } from "../utils/MovieContextProvider";
-import { useFormState } from "react-dom";
-import { Skeleton } from "@/components/ui/skeleton";
-import axios from "axios";
 
 export default function HomeCarousel() {
     const { getTrendingMovieCarousel } = useContext(MovieContext);

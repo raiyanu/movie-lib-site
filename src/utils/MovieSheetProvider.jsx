@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useState } from "react";
 
 import MovieSheet from "@/components/MovieSheet";
 
@@ -20,9 +20,5 @@ export default function MovieSheetProvider({ children }) {
             {children}
             <MovieSheet id={id} open={open} onOpenChange={setOpen} movie={movie} />
         </MovieSheetContext.Provider>
-    )
+    );
 }
-
-
-
-

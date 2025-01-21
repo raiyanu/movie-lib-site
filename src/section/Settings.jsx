@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import { Button } from "@/components/ui/button"
+import { useContext } from "react";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogClose,
@@ -9,8 +9,8 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
-import { MovieContext } from '@/utils/MovieContextProvider';
+} from "@/components/ui/dialog";
+import { MovieContext } from "@/utils/MovieContextProvider";
 export default function Settings() {
     const { doClearAwayMovieDB } = useContext(MovieContext);
     return (
@@ -22,7 +22,10 @@ export default function Settings() {
                 <table className="mx-auto w-full max-w-screen-md">
                     <thead>
                         <tr className="m-0 border-t p-0 even:bg-muted">
-                            <th className="grid-col-[0_/span_2] border bg-red-400 px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right" colspan="100">
+                            <th
+                                className="grid-col-[0_/span_2] border bg-red-400 px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"
+                                colspan="100"
+                            >
                                 Account Option
                             </th>
                         </tr>
@@ -43,38 +46,28 @@ export default function Settings() {
                                 Clear Everything
                             </td>
                             <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-                                <DialogCloseButton>
-                                    Clear
-                                </DialogCloseButton>
+                                <DialogCloseButton>Clear</DialogCloseButton>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p className="leading-7 [&:not(:first-child)]:mt-6">
-
-            </p>
-            <p className="leading-7 [&:not(:first-child)]:mt-6">
-
-            </p>
+            <p className="leading-7 [&:not(:first-child)]:mt-6"></p>
+            <p className="leading-7 [&:not(:first-child)]:mt-6"></p>
         </div>
-    )
+    );
 }
-
-
 
 export function DialogCloseButton({ children, actions }) {
     return (
-        <Dialog >
+        <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline">{children}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle> Are you sure?</DialogTitle>
-                    <DialogDescription>
-                        {/* Are you sure? */}
-                    </DialogDescription>
+                    <DialogDescription>{/* Are you sure? */}</DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="sm:justify-end">
                     <DialogClose asChild>
@@ -85,5 +78,5 @@ export function DialogCloseButton({ children, actions }) {
                 </DialogFooter>
             </DialogContent>
         </Dialog>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { MovieSheetContext } from "@/utils/MovieSheetProvider";
+
 export default function MovieCard({ movie }) {
     const { ExpandMovie } = useContext(MovieSheetContext);
     const { toggleFavorite, isFavorite } = useContext(MovieContext);
@@ -17,31 +18,42 @@ export default function MovieCard({ movie }) {
     useEffect(() => {
         const run = async () => setLiked(await isFavorite(movie.imdbID));
         run();
-        setCensor(!(movie.Rated == "PG-13" || movie.Rated == "R" || movie.Rated == "unrated"))
+        setCensor(
+            !(
+                movie.Rated == "PG-13" ||
+                movie.Rated == "R" ||
+                movie.Rated == "unrated"
+            )
+        );
     }, [movie.imdbID]);
     const togglingFavorite = () => {
         async function run() {
             let toggled = await toggleFavorite(movie.imdbID);
             setLiked(toggled);
             const showToast = (turnedFavorite) => {
-                const args = [(turnedFavorite ? "Added to Favorite List" : "Removed from Favorite List"), {
-                    description: `Movie Name : ${movie.Title}`,
-                    action: {
-                        label: "Undo",
-                        onClick: async () => {
-                            toggled = await toggleFavorite(movie.imdbID)
-                            setLiked(toggled);
-                            showToast(toggled);
+                const args = [
+                    turnedFavorite
+                        ? "Added to Favorite List"
+                        : "Removed from Favorite List",
+                    {
+                        description: `Movie Name : ${movie.Title}`,
+                        action: {
+                            label: "Undo",
+                            onClick: async () => {
+                                toggled = await toggleFavorite(movie.imdbID);
+                                setLiked(toggled);
+                                showToast(toggled);
+                            },
                         },
                     },
-                }]
+                ];
                 if (turnedFavorite) {
                     toast.success(...args);
                 } else {
                     toast(...args);
                 }
-                console.log("Showing toast")
-            }
+                console.log("Showing toast");
+            };
             showToast(toggled);
         }
         run();
@@ -49,13 +61,13 @@ export default function MovieCard({ movie }) {
     console.log(movie);
     const unCensorIt = () => setCensor(false);
 
-
     return (
         <Card className="w-[280px] max-w-[97vw] gap-2 overflow-hidden">
             <CardContent className="relative h-96 overflow-hidden border p-0">
                 <img
                     src={movie.Poster}
-                    className={`h-full w-full max-w-[95vw] select-none object-cover  ${Censor ? "blur-lg cursor-pointer" : ""}`}
+                    className={`h-full w-full max-w-[95vw] select-none object-cover  ${Censor ? "blur-lg cursor-pointer" : ""
+                        }`}
                     alt=""
                     onClick={unCensorIt}
                 />
@@ -76,9 +88,8 @@ export default function MovieCard({ movie }) {
                     src={movie.Poster}
                     className="absolute -top-full left-4 max-w-20 select-none rounded-sm object-cover shadow-2xl shadow-[rgba(255,255,255,0.2)]"
                     alt=""
-                /> */}
+                /> // Thumbnail image */ }
                 <div className="text-content">
-
                     <Badge
                         variant="outline"
                         className="bg-red-500 p-0 px-2 text-center text-xs"
@@ -93,10 +104,7 @@ export default function MovieCard({ movie }) {
                     </p>
                 </div>
                 <div className="flex h-full flex-col justify-between">
-                    <Badge
-                        variant="outline"
-                        className="block w-full p-0 text-center"
-                    >
+                    <Badge variant="outline" className="block w-full p-0 text-center">
                         {movie?.Ratings?.[0]?.Value}
                     </Badge>
                     <Button

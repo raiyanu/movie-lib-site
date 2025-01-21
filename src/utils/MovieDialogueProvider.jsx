@@ -1,6 +1,6 @@
-import { createContext, useState } from "react"
+import { createContext, useState } from "react";
 
-import MovieDialogue from '@/components/MovieDialogue.jsx'
+import MovieDialogue from "@/components/MovieDialogue.jsx";
 
 export const MovieDialogueContext = createContext();
 
@@ -13,7 +13,6 @@ export default function MovieDialogueProvider({ children }) {
         setOpen(() => true);
         setMovie(() => movie);
         console.log(id);
-
     }
 
     return (
@@ -21,9 +20,5 @@ export default function MovieDialogueProvider({ children }) {
             {children}
             <MovieDialogue id={id} open={open} setOpen={setOpen} movie={movie} />
         </MovieDialogueContext.Provider>
-    )
+    );
 }
-
-
-
-

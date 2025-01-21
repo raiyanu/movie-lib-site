@@ -7,6 +7,7 @@ export function loadFavoriteMovieDB() {
 export function updateFavoriteMovieDB(favorite) {
     localStorage.setItem("FavoriteMovieDB", JSON.stringify(favorite));
 }
+
 export function toggleFavoriteDB(id) {
     if (loadFavoriteMovieDB().includes(id)) {
         console.log("removing");
@@ -32,6 +33,7 @@ export function removeFavoriteMovieDB(id) {
     console.log(favorite);
     return false;
 }
+
 export function clearAwayMovieDB() {
     localStorage.removeItem("FavoriteMovieDB");
     console.log("clearing all the favorite lists");

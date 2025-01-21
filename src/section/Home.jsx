@@ -1,23 +1,28 @@
-import React, { useState, useEffect, useContext, Suspense, lazy, useRef } from 'react';
-// import MovieFeed from "@/section/MovieFeed";
+import React, {
+    useState,
+    useEffect,
+    useContext,
+    Suspense,
+    lazy,
+    useRef,
+} from "react";
 const MovieCardContainer = lazy(() => import("@/section/MovieCardContainer"));
-import HomeCarousel from '../components/HomeCarousel';
-import { MovieContext } from '@/utils/MovieContextProvider';
+import HomeCarousel from "../components/HomeCarousel";
+import { MovieContext } from "@/utils/MovieContextProvider";
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 
 export default function Home() {
     const { getTrendingMovie, feedLoading } = useContext(MovieContext);
     const [moviesList, setMoviesList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const ref = useRef(null)
+    const ref = useRef(null);
 
     const changePage = (pageNumber) => {
         if ("<" === pageNumber && currentPage > 1) {
@@ -30,7 +35,7 @@ export default function Home() {
         console.log(pageNumber);
         console.log(currentPage);
         window.scrollTo(0, 0);
-    }
+    };
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -48,20 +53,18 @@ export default function Home() {
         fetchMovies();
     }, [currentPage]);
 
-
     return (
-        <div className='max-w-full overflow-x-clip pb-52' ref={ref}>
+        <div className="max-w-full overflow-x-clip pb-52" ref={ref}>
             <Suspense fallback={<HalfSceenLoader />}>
                 <HomeCarousel />
-                {
-                    feedLoading ? <HalfSceenLoader /> :
-                        <MovieCardContainer moviesList={moviesList} />
-                }
+                {feedLoading ? (
+                    <HalfSceenLoader />
+                ) : (
+                    <MovieCardContainer moviesList={moviesList} />
+                )}
                 <Pagination className="my-4">
                     <PaginationContent className="*:cursor-pointer *:select-none">
-                        {
-                            renderPageButtons(5, currentPage, changePage)
-                        }
+                        {renderPageButtons(5, currentPage, changePage)}
                     </PaginationContent>
                 </Pagination>
             </Suspense>
@@ -73,7 +76,10 @@ const renderPageButtons = (noOfPage, currentPage, handleOptionChange) => {
     let elements = [];
     if (!(currentPage === 1)) {
         elements.push(
-            <PaginationItem key={"PreviousButton"} onClick={() => handleOptionChange("<")}>
+            <PaginationItem
+                key={"PreviousButton"}
+                onClick={() => handleOptionChange("<")}
+            >
                 <PaginationPrevious value={"<"} />
             </PaginationItem>
         );
@@ -84,10 +90,11 @@ const renderPageButtons = (noOfPage, currentPage, handleOptionChange) => {
         i++
     ) {
         elements.push(
-            <PaginationItem key={`PreviousButton-${i}th-button`} onClick={() => handleOptionChange(i)}>
-                <PaginationLink isActive={currentPage === i}>
-                    {i}
-                </PaginationLink>
+            <PaginationItem
+                key={`PreviousButton-${i}th-button`}
+                onClick={() => handleOptionChange(i)}
+            >
+                <PaginationLink isActive={currentPage === i}>{i}</PaginationLink>
             </PaginationItem>
         );
     }
@@ -101,7 +108,10 @@ const renderPageButtons = (noOfPage, currentPage, handleOptionChange) => {
 
     if (!(currentPage === noOfPage)) {
         elements.push(
-            <PaginationItem key={"NextButton"} onClick={() => handleOptionChange(">")}>
+            <PaginationItem
+                key={"NextButton"}
+                onClick={() => handleOptionChange(">")}
+            >
                 <PaginationNext />
             </PaginationItem>
         );
@@ -112,7 +122,7 @@ const renderPageButtons = (noOfPage, currentPage, handleOptionChange) => {
 export function HalfSceenLoader() {
     return (
         <div className="my-4 grid h-[300px] w-full place-content-center">
-            <span className='loader'></span>
+            <span className="loader"></span>
         </div>
-    )
+    );
 }

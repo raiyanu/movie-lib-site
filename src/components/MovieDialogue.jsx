@@ -6,7 +6,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    // DialogTrigger,
 } from "@/components/ui/dialog"
 import { MovieContext } from "@/utils/MovieContextProvider";
 import { useContext, useState } from "react";
