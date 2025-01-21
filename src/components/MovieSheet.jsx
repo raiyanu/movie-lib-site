@@ -34,13 +34,14 @@ export default function MovieSheet({ id, open, onOpenChange, movie }) {
                         alt=""
                         onClick={unCensorIt}
                     />
-                    <SheetDescription className="flex flex-col gap-8">
-                        <div className="text-start">
+                    <div className="flex flex-col gap-8">
+                        <SheetDescription className="text-start text-sm">
                             <strong className="w-full text-start text-lg text-gray-600">
                                 Plot:
                             </strong>
-                            <p className="text-sm">{movie?.Plot || "N/A"}</p>
-                        </div>
+                            {movie?.Plot || "N/A"}
+                        </SheetDescription>
+
                         <div className="mb-2 grid place-content-start gap-x-2 text-start md:grid-cols-2">
                             <p className="text-sm">
                                 <strong>Released:</strong> {movie?.Released || "N/A"}
@@ -75,7 +76,8 @@ export default function MovieSheet({ id, open, onOpenChange, movie }) {
                                 vote: {movie?.imdbVotes || "N/A"} {" )"}
                             </p>
                         </div>
-                    </SheetDescription>
+                    </div>
+
                 </SheetHeader>
                 <SheetFooter>
                     <SheetTrigger

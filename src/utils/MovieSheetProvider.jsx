@@ -12,7 +12,6 @@ export default function MovieSheetProvider({ children }) {
         setId(() => id);
         setOpen(() => true);
         setMovie(() => movie);
-        console.log(id);
     }
 
     return (
