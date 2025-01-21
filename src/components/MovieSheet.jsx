@@ -20,12 +20,12 @@ export default function MovieSheet({ id, open, onOpenChange, movie }) {
                 movie?.Rated == "unrated"
             )
         );
-    }, []);
+    }, [id]);
     const unCensorIt = () => setCensor(false);
     return (
         <Sheet open={open} onOpenChange={onOpenChange} movie={movie}>
             <SheetContent className="w-[100vw] !max-w-[70vh] overflow-y-scroll">
-                <SheetHeader>
+                <SheetHeader className="mt-3">
                     <SheetTitle>{movie?.Title ? movie.Title : "N/A"}</SheetTitle>
                     <img
                         src={movie?.Poster ? movie.Poster : ""}

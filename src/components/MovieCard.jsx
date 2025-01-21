@@ -20,9 +20,9 @@ export default function MovieCard({ movie }) {
         run();
         setCensor(
             !(
-                movie.Rated == "PG-13" ||
-                movie.Rated == "R" ||
-                movie.Rated == "unrated"
+                movie?.Rated == "PG-13" ||
+                movie?.Rated == "R" ||
+                movie?.Rated == "unrated"
             )
         );
     }, [movie.imdbID]);
@@ -58,7 +58,7 @@ export default function MovieCard({ movie }) {
         }
         run();
     };
-    console.log(movie);
+
     const unCensorIt = () => setCensor(false);
 
     return (

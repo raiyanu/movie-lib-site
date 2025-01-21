@@ -54,15 +54,16 @@ export default function Home() {
     }, [currentPage]);
 
     return (
-        <div className="max-w-full overflow-x-clip pb-52" ref={ref}>
+        <div className="max-w-full overflow-x-clip pb-8" ref={ref}>
             <Suspense fallback={<HalfSceenLoader />}>
                 <HomeCarousel />
+                <h3 className="scroll-m-20 border-b pb-2 text-3xl font-bold tracking-tight transition-colors first:mt-0">Trending :</h3>
                 {feedLoading ? (
                     <HalfSceenLoader />
                 ) : (
                     <MovieCardContainer moviesList={moviesList} />
                 )}
-                <Pagination className="my-4">
+                <Pagination className="mt-8">
                     <PaginationContent className="*:cursor-pointer *:select-none">
                         {renderPageButtons(5, currentPage, changePage)}
                     </PaginationContent>
