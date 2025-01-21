@@ -23,10 +23,12 @@ export default function Navbar({ children }) {
     const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState("");
     const [searchOption, setSearchOption] = useState("title");
+    const [searchBarOpen, setSearchBarOpen] = useState("");
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(`${searchInput} : ${searchOption}`);
         navigate(`/search/${searchOption}/${searchInput}`);
+        setSearchBarOpen("")
     };
 
     return (
@@ -40,9 +42,12 @@ export default function Navbar({ children }) {
                     <img src="/favicon.ico" height={40} width={30} alt="" /> M-Library
                 </Link>
             </div>
-            <Accordion collapsible className="max-h-fit border-b-0">
+            <Accordion
+                value={searchBarOpen}
+                onValueChange={() => { setSearchBarOpen(searchBarOpen != 'searchbar' ? 'searchbar' : "") }}
+                collapsible className="max-h-fit border-b-0">
                 <AccordionItem
-                    value="accordian-search"
+                    value={'searchbar'}
                     className="flex h-fit flex-col items-end justify-center gap-2 border-b-0"
                 >
                     <AccordionTrigger className="pt-1">
