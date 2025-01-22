@@ -57,7 +57,7 @@ export default function Home() {
         <div className="max-w-full overflow-x-clip pb-8" ref={ref}>
             <Suspense fallback={<HalfSceenLoader />}>
                 <HomeCarousel />
-                <h3 className="scroll-m-20 border-b pb-2 text-3xl font-bold tracking-tight transition-colors first:mt-0">Trending :</h3>
+                <h3 className="scroll-m-20 border-b pb-2 text-3xl font-bold tracking-tight transition-colors first:mt-0">Trending </h3>
                 {feedLoading ? (
                     <HalfSceenLoader />
                 ) : (

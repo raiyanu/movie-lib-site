@@ -7,7 +7,7 @@ export default function MovieFeed({ moviesList }) {
         <MovieSheetProvider>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
                 {moviesList.map((movie, index) => {
-                    return <MovieCard movie={movie} key={`MovieFeedCard-${index}`} />;
+                    return <MovieCard movie={movie} key={`MovieFeedCard-${index}`} index={index} />;
                 })}
             </div>
         </MovieSheetProvider>

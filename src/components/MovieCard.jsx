@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import { MovieSheetContext } from "@/utils/MovieSheetProvider";
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, index }) {
     const { ExpandMovie } = useContext(MovieSheetContext);
     const { toggleFavorite, isFavorite } = useContext(MovieContext);
     const [liked, setLiked] = useState(false);
