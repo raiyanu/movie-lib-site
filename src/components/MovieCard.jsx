@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MovieContext } from "@/utils/MovieContextProvider";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Heart } from "lucide-react";
+import { Heart, Scale } from "lucide-react";
 import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { MovieSheetContext } from "@/utils/MovieSheetProvider";
+import { motion } from "framer-motion";
 
 export default function MovieCard({ movie, index }) {
     const { ExpandMovie } = useContext(MovieSheetContext);
@@ -64,12 +65,21 @@ export default function MovieCard({ movie, index }) {
     return (
         <Card className="w-[280px] max-w-[97vw] gap-2 overflow-hidden">
             <CardContent className="relative h-96 overflow-hidden border p-0">
-                <img
+                <motion.img
+                    whileHover={{
+                        scale: 1.1,
+                        transition: { duration: 0.25 },
+                    }}
+                    transition={{ duration: 0.25 }}
                     src={movie.Poster}
                     className={`h-full w-full max-w-[95vw] select-none object-cover  ${Censor ? "blur-lg cursor-pointer" : ""
                         }`}
                     alt=""
-                    onClick={unCensorIt}
+                    onClick={() => {
+                        Censor ?
+                            unCensorIt() :
+                            ExpandMovie(movie.imdbID, movie);
+                    }}
                 />
                 <div
                     className="absolute right-2 top-2 flex aspect-square cursor-pointer items-center justify-center rounded-full border bg-black p-1"
